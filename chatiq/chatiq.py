@@ -1,10 +1,12 @@
 import logging
+import os
 import signal
 import sys
 import threading
 from typing import Any, List, Optional, Set
 
 import openai
+import weaviate
 from slack_bolt import App
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk.http_retry.builtin_handlers import RateLimitErrorRetryHandler
@@ -48,7 +50,7 @@ class ChatIQ:
         "mpim:read",
         "files:read",
     ]
-    COMMON_REQUIRED_SETTINGS: Set[str] = {"openai_api_key", "postgres_url", "weaviate_url"}
+    COMMON_REQUIRED_SETTINGS: Set[str] = {"openai_api_key", "postgres_url", "weaviate_url", "weaviate_api_key"}
     REQUIRED_SETTINGS_WITHOUT_BOLT_APP: Set[str] = {"slack_client_id", "slack_client_secret", "slack_signing_secret"}
 
     def __init__(
@@ -60,6 +62,7 @@ class ChatIQ:
         openai_api_key: Optional[str] = None,
         postgres_url: Optional[str] = None,
         weaviate_url: Optional[str] = None,
+        weaviate_api_key: Optional[str] = None,
         rate_limit_retry: Optional[bool] = False,
     ) -> None:
         """Initialize the ChatIQ bot with the provided settings.
@@ -73,6 +76,7 @@ class ChatIQ:
             openai_api_key (str, optional): The API key for OpenAI. Defaults to None.
             postgres_url (str, optional): The URL for the Postgres database. Defaults to None.
             weaviate_url (str, optional): The URL for the Weaviate instance. Defaults to None.
+            weaviate_api_key (str, optional): The API key for the Weaviate instance. Defaults to None.
             rate_limit_retry (bool, optional): Whether to enable the rate limit retry handler. Defaults to False.
 
         Raises:
@@ -90,6 +94,7 @@ class ChatIQ:
         self.openai_api_key = openai_api_key or Settings.OPENAI_API_KEY
         self.postgres_url = postgres_url or Settings.POSTGRES_URL
         self.weaviate_url = weaviate_url or Settings.WEAVIATE_URL
+        self.weaviate_api_key = weaviate_api_key or Settings.WEAVIATE_API_KEY
         self._validate_settings(bool(bolt_app))
 
         openai.api_key = self.openai_api_key
@@ -103,6 +108,20 @@ class ChatIQ:
 
         self.threads = []
         self.thread_lock = threading.Lock()
+
+    def _initialize_weaviate_client(self):
+        try:
+            weaviate_client = weaviate.Client(
+                url=self.weaviate_url,
+                auth_client_secret=weaviate.AuthApiKey(api_key=self.weaviate_api_key),
+                additional_headers={"X-OpenAI-Api-Key": self.openai_api_key},
+            )
+        except Exception as e:
+            error_message = f"Failed to connect to Weaviate. Error: {e}"
+            self.logger.error(error_message)
+            raise WeaviateBaseError(error_message)
+
+        return weaviate_client
 
     def listen(self) -> None:
         """Start listening for Slack events.
@@ -205,7 +224,15 @@ class ChatIQ:
         """
 
         try:
-            weaviate_client = Client(self.weaviate_url)
+            weaviate_url = os.getenv("WEAVIATE_URL")
+            weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
+            openai_api_key = os.getenv("OPENAI_API_KEY")
+
+            weaviate_client = weaviate.Client(
+                url=weaviate_url,
+                auth_client_secret=weaviate.AuthApiKey(weaviate_api_key=weaviate_api_key),
+                additional_headers={"X-OpenAI-Api-Key": openai_api_key},
+            )
         except Exception as e:
             error_message = f"Failed to connect to Weaviate. Error: {e}"
             self.logger.error(error_message)
