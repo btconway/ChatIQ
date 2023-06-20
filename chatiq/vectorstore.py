@@ -39,15 +39,15 @@ class Vectorstore:
         "timestamp",
     ]
     CLASS_SCHEMA = {
-        "class": "<class to be updated>",
-        "description": "<description to be updated>",
-        "vectorizer": "text2vec-transformers",
-        "moduleConfig": {"text2vec-transformers": {"poolingStrategy": "masked_mean", "vectorizeClassName": False}},
+        "class": "VNTANA",
+        "description": "VNTANA data",
+        "vectorizer": "text2vec-openai",
+        "moduleConfig": {"text2vec-openai": {"poolingStrategy": "masked_mean", "vectorizeClassName": False}},
         "properties": [
             {
                 "dataType": ["text"],
                 "description": "The content of the message",
-                "moduleConfig": {"text2vec-transformers": {"skip": False, "vectorizePropertyName": False}},
+                "moduleConfig": {"text2vec-openai": {"skip": False, "vectorizePropertyName": False}},
                 "name": "content",
             },
             {
