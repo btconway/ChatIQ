@@ -21,6 +21,7 @@ def mock_env_variables(monkeypatch):
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     monkeypatch.delenv("POSTGRES_URL", raising=False)
     monkeypatch.delenv("WEAVIATE_URL", raising=False)
+    monkeypatch.delenv("WEAVIATE_API_KEY", raising=False)
 
 
 @pytest.fixture
@@ -63,6 +64,7 @@ def test_environment_variables_settings_without_bolt_app(
     monkeypatch.setenv("OPENAI_API_KEY", "openai-api-key")
     monkeypatch.setenv("POSTGRES_URL", "postgres-url")
     monkeypatch.setenv("WEAVIATE_URL", "weaviate-url")
+    monkeypatch.setenv("WEAVIATE_API_KEY", "weaviate-api-key")
 
     ChatIQ()
 
@@ -75,6 +77,7 @@ def test_argument_settings_without_bolt_app(mock_env_variables, mock_weaviate_cl
         openai_api_key="test_openai_api_key",
         postgres_url="test_postgres_url",
         weaviate_url="test_weaviate_url",
+        weaviate_api_key="test_weaviate_api_key",
     )
 
 
@@ -84,6 +87,7 @@ def test_missing_setting_with_bolt_app(mock_env_variables, mock_weaviate_client,
         openai_api_key="test_openai_api_key",
         postgres_url="test_postgres_url",
         weaviate_url="test_weaviate_url",
+        weaviate_api_key="test_weaviate_api_key",
     )
 
 
@@ -93,6 +97,7 @@ def test_environment_variables_settings_with_bolt_app(
     monkeypatch.setenv("OPENAI_API_KEY", "openai-api-key")
     monkeypatch.setenv("POSTGRES_URL", "postgres-url")
     monkeypatch.setenv("WEAVIATE_URL", "weaviate-url")
+    monkeypatch.setenv("WEAVIATE_API_KEY", "weaviate-api-key")
 
     ChatIQ(bolt_app=mock_bolt_app)
 
@@ -111,6 +116,7 @@ def test_rate_limit_retry_handler(mock_env_variables, mock_weaviate_client, mock
         openai_api_key="test_openai_api_key",
         postgres_url="test_postgres_url",
         weaviate_url="test_weaviate_url",
+        weaviate_api_key="test_weaviate_api_key",
         rate_limit_retry=True,
     )
 
@@ -127,6 +133,7 @@ def test_listen(mock_env_variables, mock_weaviate_client, mock_database, mocker)
         openai_api_key="test_openai_api_key",
         postgres_url="test_postgres_url",
         weaviate_url="test_weaviate_url",
+        weaviate_api_key="test_weaviate_api_key",
     )
 
     mock_event = mocker.patch.object(chatiq.bolt_app, "event")
@@ -166,6 +173,7 @@ def test_add_thread(mock_env_variables, mock_weaviate_client, mock_database, moc
         openai_api_key="test_openai_api_key",
         postgres_url="test_postgres_url",
         weaviate_url="test_weaviate_url",
+        weaviate_api_key="test_weaviate_api_key",
     )
     assert len(chatiq.threads) == 0
 
