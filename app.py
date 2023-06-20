@@ -4,15 +4,15 @@ from slack_bolt.adapter.flask import SlackRequestHandler
 
 from chatiq import ChatIQ
 
-# Initialize ChatIQ with your settings
+# chatiq.chatiq ChatIQ with your settings
 chatiq = ChatIQ(
-    slack_client_id="your-slack-client-id",  # Optional, or read SLACK_CLIENT_ID from environment variables
-    slack_client_secret="your-slack-client-secret",  # Optional, or read SLACK_CLIENT_SECRET from environment variables
-    slack_signing_secret="your-slack-signing-secret",  # Optional, or read SLACK_SIGNING_SECRET from environment variables
-    openai_api_key="your-openai-api-key",  # Optional, or read OPENAI_API_KEY from environment variables
-    postgres_url="your-postgres-url",  # Optional, or read POSTGRES_URL from environment variables
-    weaviate_url="your-weaviate-url",  # Optional, or read WEAVIATE_URL from environment variables
-    weaviate_api_key="your-weaviate-api-key",  # Optional, or read WEAVIATE_API_KEY from environment variables
+    slack_client_id="21508257411.5451020228309",  # Optional, or read SLACK_CLIENT_ID from environment variables
+    slack_client_secret="8391fc17f3e4430e36a3156e580f3d9e",  # Optional, or read SLACK_CLIENT_SECRET from environment variables
+    slack_signing_secret="d571029b6e75074d899678e08e7cf55a",  # Optional, or read SLACK_SIGNING_SECRET from environment variables
+    openai_api_key="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",  # Optional, or read OPENAI_API_KEY from environment variables
+    postgres_url="postgres://ffhilksvihlavt:4ee3398797f7b88650d341568ecc5dc6276ee9d1244fc101b39518d048df1c97@ec2-54-84-182-168.compute-1.amazonaws.com:5432/dchgpmlnet5t66",  # Optional, or read POSTGRES_URL from environment variables
+    weaviate_url="https://qkkaupkrrpgbpwbekvzvw.gcp-c.weaviate.cloud",  # Optional, or read WEAVIATE_URL from environment variables
+    weaviate_api_key="Ue7kHriJHF2RxzRv5Sx05eyRkbWvAplECk0e",  # Optional, or read WEAVIATE_API_KEY from environment variables
     rate_limit_retry=True,  # Optional. Enable the rate limit retry handler (default is False)
 )
 # Start listening for Slack events
