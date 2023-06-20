@@ -13,7 +13,7 @@ chatiq = ChatIQ(
     slack_client_secret=os.getenv("SLACK_CLIENT_SECRET"),
     slack_signing_secret=os.getenv("SLACK_SIGNING_SECRET"),
     openai_api_key=os.getenv("OPENAI_API_KEY"),
-    postgres_url=os.getenv("POSTGRES_URL"),
+    postgres_url=os.getenv("DATABASE_URL"),  # Changed from POSTGRES_URL to DATABASE_URL
     weaviate_url=os.getenv("WEAVIATE_URL"),
     weaviate_api_key=os.getenv("WEAVIATE_API_KEY"),
     rate_limit_retry=True,  # Optional. Enable the rate limit retry handler (default is False)
@@ -27,7 +27,6 @@ chatiq.listen()
 app = Flask(__name__)
 # Create a SlackRequestHandler with the Bolt app from ChatIQ
 handler = SlackRequestHandler(chatiq.bolt_app)
-
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 db = SQLAlchemy(app)
 
