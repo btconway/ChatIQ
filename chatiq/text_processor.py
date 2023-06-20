@@ -21,10 +21,12 @@ class TextProcessor:
     MODEL_TO_TOKEN_LENGTH = {
         "gpt-4": 6000,
         "gpt-4-0314": 6000,
+        "gpt-4-0613": 6000,
         "gpt-4-32k": 30000,
         "gpt-4-32k-0314": 30000,
         "gpt-3.5-turbo": 3000,
         "gpt-3.5-turbo-0301": 3000,
+        "gpt-3.5-turbo-16k-0613": 14000,
     }
 
     def __init__(self, model: str) -> None:
