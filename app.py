@@ -7,18 +7,6 @@ from slack_bolt.adapter.flask import SlackRequestHandler
 
 from chatiq import ChatIQ
 
-# Print environment variables for debugging
-print("SLACK_CLIENT_ID:", os.getenv("SLACK_CLIENT_ID"))
-print("SLACK_CLIENT_SECRET:", os.getenv("SLACK_CLIENT_SECRET"))
-print("SLACK_SIGNING_SECRET:", os.getenv("SLACK_SIGNING_SECRET"))
-print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))
-print("DATABASE_URL:", os.getenv("DATABASE_URL"))
-print("WEAVIATE_URL:", os.getenv("WEAVIATE_URL"))
-print("WEAVIATE_API_KEY:", os.getenv("WEAVIATE_API_KEY"))
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-print(f"DATABASE_URL before update: {DATABASE_URL}")
-
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
