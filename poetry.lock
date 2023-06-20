@@ -622,6 +622,21 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-sqlalchemy"
+version = "3.0.4"
+description = "Add SQLAlchemy support to your Flask application."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "flask_sqlalchemy-3.0.4-py3-none-any.whl", hash = "sha256:23d44ca566b02b0b5ee5b29d81b435079402ad73c116bf9918dbda5b03aa30ba"},
+    {file = "flask_sqlalchemy-3.0.4.tar.gz", hash = "sha256:b812bc7f1bbf5ff3041cbfa0428bb191bed2c342b7bed88c15d7ce01890bfd5d"},
+]
+
+[package.dependencies]
+flask = ">=2.2.5"
+sqlalchemy = ">=1.4.18"
+
+[[package]]
 name = "freezegun"
 version = "1.2.2"
 description = "Let your Python tests travel through time"
@@ -2311,4 +2326,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.9"
-content-hash = "a32c1e2a16d3fb1af12e5c1fe7f888f7b7f2ed62d3735ebb25fb103b39832de1"
+content-hash = "a4a3f99958d0cfaff063c6f86b23d2acca54abc7cc1f4b997978d802c587a080"
