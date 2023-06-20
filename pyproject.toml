@@ -36,7 +36,6 @@ pytz = "^2023.3"
 weaviate-client = "^3.17.1"
 beautifulsoup4 = "^4.12.2"
 flask-sqlalchemy = "^3.0.4"
-psycopg2 = "^2.9.6"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
