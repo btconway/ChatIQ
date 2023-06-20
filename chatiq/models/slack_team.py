@@ -27,7 +27,7 @@ class SlackTeam(Base):
         timezone_offset (Column): The default timezone offset for the team (default is "+00:00").
     """
 
-    MODELS = ["gpt-3.5-turbo"]
+    MODELS = ["gpt-3.5-turbo-16k-0613"]
     TIMEZONE_OFFSETS = get_timezone_offsets()
     MIN_TEMPERATURE = 0.0
     MAX_TEMPERATURE = 2.0
@@ -38,7 +38,7 @@ class SlackTeam(Base):
     team_id = Column(String(32), unique=True, nullable=False)
     bot_id = Column(String(32), nullable=False)
     namespace_uuid = Column(UUID(as_uuid=True), unique=True, nullable=False, default=uuid.uuid4)
-    model = Column(String(32), nullable=False, default="gpt-3.5-turbo")
+    model = Column(String(32), nullable=False, default="gpt-3.5-turbo-16k-0613")
     temperature = Column(Float, nullable=False, default=1.0)
     context = Column(
         String(256),
