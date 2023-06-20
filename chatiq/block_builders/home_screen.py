@@ -11,7 +11,10 @@ class HomeScreenBlockBuilder:
     It follows the builder pattern, allowing a fluent interface for creating blocks.
     """
 
-    MODEL_OPTIONS = [{"text": {"type": "plain_text", "text": ":rocket:  GPT 3.5"}, "value": "gpt-3.5-turbo"}]
+    MODEL_OPTIONS = [
+        {"text": {"type": "plain_text", "text": ":snail:  GPT 3.5"}, "value": "gpt-3.5-turbo-16k-613"},
+        {"text": {"type": "plain_text", "text": ":rocket:  GPT 4"}, "value": "gpt-4-0613"},  # added new model
+    ]
     TEMPERATURE_OPTIONS = [
         {"text": {"type": "plain_text", "text": ":snowflake:  Focused (0)"}, "value": "0.0"},
         {"text": {"type": "plain_text", "text": ":cloud:  Moderate (0.2)"}, "value": "0.2"},
@@ -203,6 +206,9 @@ class HomeScreenBlockBuilder:
         Returns:
             HomeScreenBlockBuilder: The instance of the HomeScreenBlockBuilder for chaining.
         """
+
+        # set default model to "gpt-4-0613" if no model is provided
+        model = model or "gpt-4-0613"
 
         initial_option = next((option for option in self.MODEL_OPTIONS if option["value"] == model), None)
         self.blocks.append(
