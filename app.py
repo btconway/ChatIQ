@@ -7,9 +7,6 @@ from slack_bolt.adapter.flask import SlackRequestHandler
 
 from chatiq import ChatIQ
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-db = SQLAlchemy(app)
-
 # chatiq.chatiq ChatIQ with your settings
 chatiq = ChatIQ(
     slack_client_id="21508257411.5451020228309",  # Optional, or read SLACK_CLIENT_ID from environment variables
@@ -28,6 +25,9 @@ chatiq.listen()
 app = Flask(__name__)
 # Create a SlackRequestHandler with the Bolt app from ChatIQ
 handler = SlackRequestHandler(chatiq.bolt_app)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+db = SQLAlchemy(app)
 
 
 # Handle installation and OAuth redirect endpoints
