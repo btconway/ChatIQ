@@ -35,10 +35,15 @@ chatiq.listen()
 app = Flask(__name__)
 # Create a SlackRequestHandler with the Bolt app from ChatIQ
 handler = SlackRequestHandler(chatiq.bolt_app)
+
 DATABASE_URL = os.getenv("DATABASE_URL")
+print(f"DATABASE_URL before update: {DATABASE_URL}")
+
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-print("Updated DATABASE_URL:", DATABASE_URL)  # Print the updated DATABASE_URL for debugging
+
+print(f"DATABASE_URL after update: {DATABASE_URL}")  # Print the updated DATABASE_URL for debugging
+
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 db = SQLAlchemy(app)
 
