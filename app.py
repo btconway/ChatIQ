@@ -7,6 +7,15 @@ from slack_bolt.adapter.flask import SlackRequestHandler
 
 from chatiq import ChatIQ
 
+# Print environment variables for debugging
+print("SLACK_CLIENT_ID:", os.getenv("SLACK_CLIENT_ID"))
+print("SLACK_CLIENT_SECRET:", os.getenv("SLACK_CLIENT_SECRET"))
+print("SLACK_SIGNING_SECRET:", os.getenv("SLACK_SIGNING_SECRET"))
+print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))
+print("DATABASE_URL:", os.getenv("DATABASE_URL"))
+print("WEAVIATE_URL:", os.getenv("WEAVIATE_URL"))
+print("WEAVIATE_API_KEY:", os.getenv("WEAVIATE_API_KEY"))
+
 # chatiq.chatiq ChatIQ with your settings
 chatiq = ChatIQ(
     slack_client_id=os.getenv("SLACK_CLIENT_ID"),
@@ -22,7 +31,6 @@ chatiq = ChatIQ(
 # Start listening for Slack events
 chatiq.listen()
 
-
 # Create a Flask app
 app = Flask(__name__)
 # Create a SlackRequestHandler with the Bolt app from ChatIQ
@@ -30,6 +38,7 @@ handler = SlackRequestHandler(chatiq.bolt_app)
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+print("Updated DATABASE_URL:", DATABASE_URL)  # Print the updated DATABASE_URL for debugging
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 db = SQLAlchemy(app)
 
