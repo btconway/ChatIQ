@@ -22,6 +22,7 @@ class Settings:
         OPENAI_API_KEY (str): The API key for the OpenAI application.
         POSTGRES_URL (str): The URL for the PostgreSQL database.
         WEAVIATE_URL (str): The URL for the Weaviate service.
+        WEAVIATE_API_KEY (str): The API Key for the Weaviate service.
         ENCRYPTION_KEY (bytes): The encryption key for MongoDB.
     """
 
@@ -66,6 +67,12 @@ class Settings:
         """str: The URL for the Weaviate service."""
 
         return os.environ.get("WEAVIATE_URL")
+
+    @property
+    def WEAVIATE_API_KEY(self):
+        """str: The API Key for the Weaviate service."""
+
+        return os.environ.get("WEAVIATE_API_KEY")
 
 
 Settings = Settings()
