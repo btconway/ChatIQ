@@ -28,6 +28,8 @@ class Retriever(VectorStoreRetriever):
             thread_ts (str): The ID of the thread. This is used to exclude messages in the current thread.
         """
 
+        assert vectorstore._client is not None, "vectorstore._client is not initialized"
+
         where_filter = self._build_retrieval_where_filter(is_private, channel_id, thread_ts)
         super().__init__(
             vectorstore=vectorstore,
@@ -194,3 +196,36 @@ class Retriever(VectorStoreRetriever):
                 {"path": ["permalink"], "operator": "Equal", "valueString": url},
             ],
         }
+
+    def search_near_text(self, concepts: list, certainty: float) -> str:
+        """
+        Search for documents in the Weaviate index that are near to certain concepts.
+
+        This method builds a near text filter and retrieves documents from the Weaviate index that match
+        this filter. If the document is found, it returns the content of the first matching document.
+
+        Args:
+            concepts (list): The concepts to search for.
+            certainty (float): The certainty for the near text query.
+
+        Returns:
+            str: The content of the first document matching the concepts.
+        """
+        near_text = {
+            "concepts": concepts,
+            "certainty": certainty,
+        }
+
+        result = (
+            self.vectorstore._client.query.get(self.vectorstore._index_name, self.vectorstore._query_attrs)
+            .with_near_text(near_text)
+            .with_where({"path": ["channel_id"], "operator": "Equal", "valueString": self.channel_id})
+            .with_limit(1)
+            .do()
+        )
+
+        documents = result["data"]["Get"][self.vectorstore._index_name]
+        if documents:
+            return documents[0]["content"]
+
+        return "Document is not found."
