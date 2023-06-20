@@ -220,7 +220,7 @@ class Retriever(VectorStoreRetriever):
             self.vectorstore._client.query.get(self.vectorstore._index_name, self.vectorstore._query_attrs)
             .with_near_text(near_text)
             .with_additional({"certainty": 0.9})
-            .with_limit(4)
+            .with_limit(2)
             .do()
         )
 
