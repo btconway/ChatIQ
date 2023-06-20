@@ -1,8 +1,12 @@
 from flask import Flask, make_response, request
+from flask_sqlalchemy import SQLAlchemy
 from slack_bolt import BoltRequest
 from slack_bolt.adapter.flask import SlackRequestHandler
 
 from chatiq import ChatIQ
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+db = SQLAlchemy(app)
 
 # chatiq.chatiq ChatIQ with your settings
 chatiq = ChatIQ(
