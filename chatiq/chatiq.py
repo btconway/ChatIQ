@@ -56,13 +56,13 @@ class ChatIQ:
     def __init__(
         self,
         bolt_app: Optional[App] = None,
-        slack_client_id: Optional[str] = None,
-        slack_client_secret: Optional[str] = None,
-        slack_signing_secret: Optional[str] = None,
-        openai_api_key: Optional[str] = None,
-        postgres_url: Optional[str] = None,
-        weaviate_url: Optional[str] = None,
-        weaviate_api_key: Optional[str] = None,
+        slack_client_id: Optional[str] = True,
+        slack_client_secret: Optional[str] = True,
+        slack_signing_secret: Optional[str] = True,
+        openai_api_key: Optional[str] = True,
+        postgres_url: Optional[str] = True,
+        weaviate_url: Optional[str] = True,
+        weaviate_api_key: Optional[str] = True,
         rate_limit_retry: Optional[bool] = False,
     ) -> None:
         """Initialize the ChatIQ bot with the provided settings.
