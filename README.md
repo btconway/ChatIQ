@@ -124,6 +124,7 @@ chatiq = ChatIQ(
     openai_api_key="your-openai-api-key", # Optional, or read OPENAI_API_KEY from environment variables
     postgres_url="your-postgres-url", # Optional, or read POSTGRES_URL from environment variables
     weaviate_url="your-weaviate-url", # Optional, or read WEAVIATE_URL from environment variables
+    weaviate_api_key="your-weaviate-api-key",
     rate_limit_retry=True, # Optional. Enable the rate limit retry handler (default is False)
 )
 # Start listening for Slack events
@@ -178,6 +179,7 @@ chatiq = ChatIQ(
     openai_api_key="your-openai-api-key", # Optional, or read OPENAI_API_KEY from environment variables
     postgres_url="your-postgres-url", # Optional, or read POSTGRES_URL from environment variables
     weaviate_url="your-weaviate-url", # Optional, or read WEAVIATE_URL from environment variables
+    weaviate_api_key="your-weaviate-api-key",
     rate_limit_retry=True, # Optional. Enable the rate limit retry handler (default is False)
 )
 
