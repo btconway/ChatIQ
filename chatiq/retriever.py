@@ -219,8 +219,8 @@ class Retriever(VectorStoreRetriever):
         result = (
             self.vectorstore._client.query.get(self.vectorstore._index_name, self.vectorstore._query_attrs)
             .with_near_text(near_text)
-            .with_where({"path": ["channel_id"], "operator": "Equal", "valueString": self.channel_id})
-            .with_limit(1)
+            .with_additional({"certainty": 0.9})
+            .with_limit(4)
             .do()
         )
 
