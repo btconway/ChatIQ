@@ -8,6 +8,7 @@ cleo==2.0.1
 crashtest==0.4.1
 distlib==0.3.6
 dulwich==0.21.5
+flask
 filelock==3.12.2
 gunicorn
 html5lib==1.1
