@@ -209,37 +209,6 @@ class ChatIQ:
                 f"Please provide them in environment variables or pass them as arguments."
             )
 
-    def _initialize_weaviate_client(self):
-        """Initialize the Weaviate client with the provided Weaviate URL.
-
-        This method is responsible for creating an instance of the Weaviate client and ensuring
-        that it can connect to the Weaviate instance at the provided URL. It's separated from the
-        constructor to allow for dependency injection during testing.
-
-        Returns:
-            Client: The initialized Weaviate client.
-
-        Raises:
-            WeaviateBaseError: If there is an issue with connecting to the Weaviate instance.
-        """
-
-        try:
-            weaviate_url = os.getenv("WEAVIATE_URL")
-            weaviate_api_key = os.getenv("WEAVIATE_API_KEY")
-            openai_api_key = os.getenv("OPENAI_API_KEY")
-
-            weaviate_client = weaviate.Client(
-                url=weaviate_url,
-                auth_client_secret=weaviate.AuthApiKey(weaviate_api_key=weaviate_api_key),
-                additional_headers={"X-OpenAI-Api-Key": openai_api_key},
-            )
-        except Exception as e:
-            error_message = f"Failed to connect to Weaviate. Error: {e}"
-            self.logger.error(error_message)
-            raise WeaviateBaseError(error_message)
-
-        return weaviate_client
-
     def _initialize_database(self):
         db = Database(self.postgres_url, self.slack_client_id)
         db.setup()
